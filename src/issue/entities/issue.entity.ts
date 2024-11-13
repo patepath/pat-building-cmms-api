@@ -43,7 +43,7 @@ export class Issue {
     @ManyToOne(() => Equipment, (equipment) => equipment.id, { eager: true })
     equipment: Equipment;
 
-    @Column('text')
+    @Column('text', { default: '' })
     description: string;
 
     @Column('text', { default: '' })
@@ -60,6 +60,9 @@ export class Issue {
 
     @Column('int', { default: 0 })
     satisfication: number;
+
+    @Column('datetime', { nullable: true })
+    operationDate?: Date;
 
     @Column('datetime', { nullable: true })
     lastModifiedDate?: Date;

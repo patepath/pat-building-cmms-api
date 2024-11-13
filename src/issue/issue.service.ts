@@ -21,11 +21,9 @@ export class IssueService {
     var year = new Date(String(createIssueDto.created)).getFullYear();
     var rs: RSCode[];
 
-    await (this.generateCode(year)).then(s => {
-      rs = JSON.parse(JSON.stringify(s));
-
-      if(rs.length>0) {
-        var running = '00000' + (Number(s[0].id) + 1);
+    await (this.generateCode(year, createIssueDto.type)).then(s => {
+      if(s>0) {
+        var running = '00000' + (Number(s + 1));
         var code = `${year + 543}-${running.substring(running.length - 5)}`
         createIssueDto.code = code;
 
@@ -33,6 +31,18 @@ export class IssueService {
         var code = `${year+543}-00001`;
         createIssueDto.code = code;
       }
+
+      //rs = JSON.parse(JSON.stringify(s));
+
+      //if(rs.length>0) {
+      //  var running = '00000' + (Number(s[0].id) + 1);
+      //  var code = `${year + 543}-${running.substring(running.length - 5)}`
+      //  createIssueDto.code = code;
+
+      //} else {
+      //  var code = `${year+543}-00001`;
+      //  createIssueDto.code = code;
+      //}
     });
 
     return this.issueRepos.save(createIssueDto);
@@ -42,13 +52,34 @@ export class IssueService {
     return this.issueRepos.update(id, updateIssueDto);
   }
 
-  generateCode(year: number) {
-    return this.issueRepos.query(`
-      select count(*) as id
-      from issue
-      where year(created)=${year}
-    `);
+  async generateCode(year: number, type: number) {
+    var sql = `
+      SELECT code
+      FROM issue
+      WHERE year(created)=${year} AND type=${type}
+      ORDER BY code DESC
+      LIMIT 1;
+    `
+    var last: number
+
+    await this.issueRepos.query(sql).then(s => {
+      if(s.length>0) {
+        last = Number(s[0].code.split('-')[1]);
+      } else {
+        last = 0;
+      }
+    });
+
+    return last;
   }
+
+//  generateCode(year: number, type: number) {
+//    return this.issueRepos.query(`
+//      select count(*) as id
+//      from issue
+//      where year(created)=${year} and type=${type}
+//    `);
+//  }
 
   findAll() {
     return this.issueRepos.find();
@@ -76,6 +107,7 @@ export class IssueService {
     let frm = new Date(frmDate);
     let to = new Date(toDate);
 
+    frm.setDate(frm.getDate()-1)
     to.setDate(to.getDate()+1)
 
     return this.issueRepos.find({
@@ -87,9 +119,10 @@ export class IssueService {
     });
   }
 
-  findWaitForClose() {
+  findWaitForClose(type: number) {
     return this.issueRepos.find({
       where: {
+        type: type,
         status: 2
       }
     });
@@ -108,12 +141,14 @@ export class IssueService {
     let frm = new Date(frmDate);
     let to = new Date(toDate);
 
+    frm.setDate(frm.getDate()-1)
     to.setDate(to.getDate()+1)
 
     return this.issueRepos.find({
       where: {
-        finishedDate: Between(frm, to),
-        status: 3
+        type: type,
+        created: Between(frm, to),
+        status: 3 
       }
     });
   }
@@ -131,6 +166,7 @@ export class IssueService {
     let frm = new Date(frmDate);
     let to = new Date(toDate);
 
+    frm.setDate(frm.getDate()-1)
     to.setDate(to.getDate()+1)
 
     return this.issueRepos.find({
@@ -163,47 +199,47 @@ export class IssueService {
     return this.issueRepos.query(query);
   }
 
-  report2(frmdate: string, todate: string) {
+  report2(type: number, frmdate: string, todate: string) {
     var query = `
       select B.name as deptname , count(*) as total
       from issue as A
       join department as B on A.departmentId=B.id
-      where date(A.created) between '${frmdate}' and '${todate}' 
+      where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
       group by A.departmentId 
     `;
 
     return this.issueRepos.query(query);
   }
 
-  report3(frmdate: string, todate: string) {
+  report3(type:number, frmdate: string, todate: string) {
     var query = `
       select C.name as groupname, count(*) as total
       from issue as A
       join cmms.equipment as B on A.equipmentId=B.id
       join cmms.group as C on B.groupId=C.id
-      where date(A.created) between '${frmdate}' and '${todate}' 
+      where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
       group by C.name  
     `;
 
     return this.issueRepos.query(query);
   }
 
-  report4(frmdate: string, todate: string) {
+  report4(type: number, frmdate: string, todate: string) {
     var query = `
       select A.status as status, count(*) as total
       from issue as A
-      where date(A.created) between '${frmdate}' and '${todate}' 
+      where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
       group by A.status  
     `;
 
     return this.issueRepos.query(query);
   }
   
-  report5(frmdate: string, todate: string) {
+  report5(type: number, frmdate: string, todate: string) {
     var query = `
-      select A.satisfication as  satisfication, count(*) as total
+      select A.satisfication as satisfaction, count(*) as total
       from issue as A
-      where date(A.created) between '${frmdate}' and '${todate}' 
+      where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
       group by A.satisfication  
     `;
 

@@ -37,9 +37,9 @@ export class IssueController {
     return this.issueService.findProceedingByDate(type, frmDate, toDate);
   }
 
-  @Get('wait-for-close')
-  findWaitForClose() {
-    return this.issueService.findWaitForClose();
+  @Get('wait-for-close/:type')
+  findWaitForClose(@Param('type')  type: number) {
+    return this.issueService.findWaitForClose(+type);
   }
 
   @Get('completed/:type')
@@ -67,29 +67,25 @@ export class IssueController {
     return this.issueService.report1(frmdate, todate);
   }
 
-  @Get('report2/:frmdate/:todate')
-  report2(@Param('frmdate') frmdate: string, @Param('todate') todate: string) {
-    return this.issueService.report2(frmdate, todate);
+  @Get('report2/:type/:frmdate/:todate')
+  report2(@Param('type') type: number, @Param('frmdate') frmdate: string, @Param('todate') todate: string) {
+    return this.issueService.report2(type, frmdate, todate);
   }
 
-  @Get('report3/:frmdate/:todate')
-  report3(@Param('frmdate') frmdate: string, @Param('todate') todate: string) {
-    return this.issueService.report3(frmdate, todate);
+  @Get('report3/:type/:frmdate/:todate')
+  report3(@Param('type') type: number,@Param('frmdate') frmdate: string, @Param('todate') todate: string) {
+    return this.issueService.report3(+type, frmdate, todate);
   }
 
-  @Get('report4/:frmdate/:todate')
-  report4(@Param('frmdate') frmdate: string, @Param('todate') todate: string) {
-    return this.issueService.report4(frmdate, todate);
+  @Get('report4/:type/:frmdate/:todate')
+  report4(@Param('type') type:number, @Param('frmdate') frmdate: string, @Param('todate') todate: string) {
+    return this.issueService.report4(+type, frmdate, todate);
   }
 
-  @Get('report5/:frmdate/:todate')
-  report5(@Param('frmdate') frmdate: string, @Param('todate') todate: string) {
-    return this.issueService.report5(frmdate, todate);
+  @Get('report5/:type/:frmdate/:todate')
+  report5(@Param('type') type: number, @Param('frmdate') frmdate: string, @Param('todate') todate: string) {
+    return this.issueService.report5(+type, frmdate, todate);
   }
-//  @Get('/new-issue')
-//  findNewIssue() {
-//    return this.issueService.findNewIssue();
-//  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

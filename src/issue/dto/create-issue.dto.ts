@@ -1,7 +1,7 @@
 import { Category } from "src/category/entities/category.entity";
 import { Department } from "src/department/entities/department.entity";
 import { Equipment } from "src/equipment/entities/equipment.entity";
-import { Part } from "src/part/entities/part.entity";
+//import { Part } from "src/part/entities/part.entity";
 import { Type } from "src/type/entities/type.entity";
 import { User } from "src/user/entities/user.entity";
 
@@ -25,6 +25,7 @@ export class CreateIssueDto {
     tech?: User;
     techname: string;
     satisfication?: number;
+    operationDate?: Date;
     lastModifiedDate?: Date;
     finishedDate?: Date;
     status: number;

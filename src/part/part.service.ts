@@ -27,7 +27,7 @@ export class PartService {
   }
 
   findByIssue(issueid: number) {
-    return this.partRepos.find();
+    return this.partRepos.find({ where: { issueId: issueid}});
   }
 
   remove(id: number) {

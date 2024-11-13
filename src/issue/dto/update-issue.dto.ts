@@ -26,6 +26,7 @@ export class UpdateIssueDto extends PartialType(CreateIssueDto) {
     tech?: User;
     techname: string;
     satisfication?: number;
+    operationDate?: Date;
     lastModifiedDate?: Date;
     finishedDate?: Date;
     status: number;

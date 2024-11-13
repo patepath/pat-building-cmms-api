@@ -19,7 +19,7 @@ export class GroupService {
   }
 
   findAll() {
-    return this.groupRepos.find();
+    return this.groupRepos.find({ order: {code: 'ASC'}});
   }
 
   findOne(id: number) {
