@@ -3,24 +3,30 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { IssueModule } from './issue/issue.module';
-import { PartModule } from './part/part.module';
-import { PartProfileModule } from './part_profile/part_profile.module';
-import { UserModule } from './user/user.module';
-import { DepartmentModule } from './department/department.module';
-import { EquipmentModule } from './equipment/equipment.module';
-import { CategoryModule } from './category/category.module';
-import { GroupModule } from './group/group.module';
-import { SubgroupModule } from './subgroup/subgroup.module';
-import { User } from './user/entities/user.entity';
-import { Department } from './department/entities/department.entity';
-import { Issue } from './issue/entities/issue.entity';
-import { Group } from './group/entities/group.entity';
-import { Equipment } from './equipment/entities/equipment.entity';
-import { Part } from './part/entities/part.entity';
-import { PartProfile } from './part_profile/entities/part_profile.entity';
-import { TypeModule } from './type/type.module';
+import { Brand } from './brand/entities/brand.entity';
+import { BrandModule } from './brand/brand.module';
 import { Category } from './category/entities/category.entity';
+import { CategoryModule } from './category/category.module';
+import { Department } from './department/entities/department.entity';
+import { DepartmentModule } from './department/department.module';
+import { Equipment } from './equipment/entities/equipment.entity';
+import { EquipmentModule } from './equipment/equipment.module';
+import { Group } from './group/entities/group.entity';
+import { GroupModule } from './group/group.module';
+import { Issue } from './issue/entities/issue.entity';
+import { IssueModule } from './issue/issue.module';
+import { Machine } from './machine/entities/machine.entity';
+import { MachineModule } from './machine/machine.module';
+import { Machinegroup } from './machinegroup/entities/machinegroup.entity';
+import { MachinegroupModule } from './machinegroup/machinegroup.module';
+import { Part } from './part/entities/part.entity';
+import { PartModule } from './part/part.module';
+import { PartProfile } from './part_profile/entities/part_profile.entity';
+import { PartProfileModule } from './part_profile/part_profile.module';
+import { SubgroupModule } from './subgroup/subgroup.module';
+import { TypeModule } from './type/type.module';
+import { User } from './user/entities/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -31,20 +37,23 @@ import { Category } from './category/entities/category.entity';
       username: 'root',
       password: '35.103232',
       database: 'cmms',
-      entities: [ User, Issue, Department, Group, Equipment, Part, PartProfile, Category ],
+      entities: [ User, Issue, Department, Group, Equipment, Part, PartProfile, Category, Machine, Brand, Machinegroup ],
       autoLoadEntities: true,
       synchronize: true,
     }),
-    IssueModule,
-    PartModule,
-    PartProfileModule,
-    UserModule,
+    BrandModule,
+    CategoryModule,
     DepartmentModule,
     EquipmentModule,
     GroupModule,
+    IssueModule,
+    MachineModule,
+    MachinegroupModule,
+    PartModule,
+    PartProfileModule,
     SubgroupModule,
     TypeModule,
-    CategoryModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

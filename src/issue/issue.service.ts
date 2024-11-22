@@ -194,6 +194,7 @@ export class IssueService {
       from issue as A
       where date(created) between '${frmdate}' and '${todate}' 
       group by A.type
+      order by total desc
     `;
 
     return this.issueRepos.query(query);
@@ -206,6 +207,7 @@ export class IssueService {
       join department as B on A.departmentId=B.id
       where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
       group by A.departmentId 
+      order by total desc
     `;
 
     return this.issueRepos.query(query);
@@ -218,7 +220,8 @@ export class IssueService {
       join cmms.equipment as B on A.equipmentId=B.id
       join cmms.group as C on B.groupId=C.id
       where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
-      group by C.name  
+      group by C.name
+      order by total desc
     `;
 
     return this.issueRepos.query(query);
@@ -229,7 +232,8 @@ export class IssueService {
       select A.status as status, count(*) as total
       from issue as A
       where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
-      group by A.status  
+      group by A.status
+      order by total desc
     `;
 
     return this.issueRepos.query(query);
@@ -240,7 +244,8 @@ export class IssueService {
       select A.satisfication as satisfaction, count(*) as total
       from issue as A
       where A.type=${type} and date(A.created) between '${frmdate}' and '${todate}' 
-      group by A.satisfication  
+      group by A.satisfication
+      order by total desc
     `;
 
     return this.issueRepos.query(query);
