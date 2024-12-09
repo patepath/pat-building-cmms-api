@@ -25,6 +25,13 @@ export class MachinegroupService {
     return this.machinegroupRepos.findOne({where: {id: id}});
   }
 
+  findBySystem(systemId: number) {
+    return this.machinegroupRepos.find({
+      where: {system: {id: systemId}},
+      order: {name: 'ASC'}
+    });
+  }
+
   remove(id: number) {
     return `This action removes a #${id} machinegroup`;
   }

@@ -27,6 +27,11 @@ export class MachinegroupController {
     return this.machinegroupService.findOne(+id);
   }
 
+  @Get('/system/:systemid')
+  findBySystem(@Param('systemid') systemId: string) {
+    return this.machinegroupService.findBySystem(+systemId);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.machinegroupService.remove(+id);

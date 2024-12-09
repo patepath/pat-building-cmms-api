@@ -27,6 +27,10 @@ import { SubgroupModule } from './subgroup/subgroup.module';
 import { TypeModule } from './type/type.module';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { System } from './system/entities/system.entity';
+import { SystemModule } from './system/system.module';
+import { Machinelog } from './machinelog/entities/machinelog.entity';
+import { MachinelogModule } from './machinelog/machinelog.module';
 
 @Module({
   imports: [
@@ -37,7 +41,7 @@ import { UserModule } from './user/user.module';
       username: 'root',
       password: '35.103232',
       database: 'cmms',
-      entities: [ User, Issue, Department, Group, Equipment, Part, PartProfile, Category, Machine, Brand, Machinegroup ],
+      entities: [ User, Issue, Department, Group, Equipment, Part, PartProfile, Category, Machine, Brand, Machinegroup, System, Machinelog ],
       autoLoadEntities: true,
       synchronize: true,
     }),
@@ -54,6 +58,8 @@ import { UserModule } from './user/user.module';
     SubgroupModule,
     TypeModule,
     UserModule,
+    SystemModule,
+    MachinelogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

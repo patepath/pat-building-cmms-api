@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { System } from "src/system/entities/system.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Machinegroup {
@@ -7,4 +8,8 @@ export class Machinegroup {
 
     @Column()
     name: string;
+
+    @ManyToOne(() => System, (system) => system.id, { eager: true })
+    @JoinColumn()
+    system: System;
 }
