@@ -5,6 +5,6 @@ export class Brand {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: ''})
     name: string;
 }

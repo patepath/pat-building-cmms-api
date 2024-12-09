@@ -7,17 +7,17 @@ export class Machine {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: ''})
     name: string;
 
-    @Column()
+    @Column({default: ''})
     model: string;
 
     @ManyToOne(()=>Machinegroup, machineGroup => machineGroup.id, {eager: true})
     @JoinColumn()
     machineGroup: Machinegroup;
 
-    @ManyToOne(()=> Brand, brand => brand.id, {eager: true})
+    @ManyToOne(()=> Brand, brand => brand.id, {eager: true, nullable: true})
     @JoinColumn()
     brand: Brand;
 }

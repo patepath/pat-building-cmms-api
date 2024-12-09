@@ -22,27 +22,21 @@ export class IssueService {
     var rs: RSCode[];
 
     await (this.generateCode(year, createIssueDto.type)).then(s => {
+      let code='';
+
       if(s>0) {
-        var running = '00000' + (Number(s + 1));
-        var code = `${year + 543}-${running.substring(running.length - 5)}`
-        createIssueDto.code = code;
+        let running = '00000' + (Number(s + 1));
+        code = `${year + 543}-${running.substring(running.length - 5)}`
 
       } else {
-        var code = `${year+543}-00001`;
-        createIssueDto.code = code;
+        code = `${year+543}-00001`;
       }
 
-      //rs = JSON.parse(JSON.stringify(s));
-
-      //if(rs.length>0) {
-      //  var running = '00000' + (Number(s[0].id) + 1);
-      //  var code = `${year + 543}-${running.substring(running.length - 5)}`
-      //  createIssueDto.code = code;
-
-      //} else {
-      //  var code = `${year+543}-00001`;
-      //  createIssueDto.code = code;
-      //}
+      if(createIssueDto.type == 1) {
+        createIssueDto.code = code;
+      } else {
+        createIssueDto.code = `PM-${code}`;
+      }
     });
 
     return this.issueRepos.save(createIssueDto);
@@ -99,7 +93,8 @@ export class IssueService {
       where: {
         type: type,
         status: 1
-      }
+      }, 
+      order: {created: 'ASC'}
     });
   }
 
@@ -115,7 +110,8 @@ export class IssueService {
         type: type,
         created: Between(frm, to),
         status: 1
-      }
+      }, 
+      order: {created: 'ASC'}
     });
   }
 
@@ -124,7 +120,8 @@ export class IssueService {
       where: {
         type: type,
         status: 2
-      }
+      },
+      order: {created: 'ASC'}
     });
   }
 
@@ -133,7 +130,8 @@ export class IssueService {
       where: {
         type: type,
         status: 3
-      }
+      },
+      order: {created: 'ASC'}
     });
   }
 
@@ -149,7 +147,8 @@ export class IssueService {
         type: type,
         created: Between(frm, to),
         status: 3 
-      }
+      },
+      order: {created: 'ASC'}
     });
   }
 
@@ -158,7 +157,8 @@ export class IssueService {
       where: {
         type: type,
         status: 0
-      }
+      },
+      order: {created: 'ASC'}
     });
   }
 
@@ -174,7 +174,8 @@ export class IssueService {
         type: type,
         created: Between(frm, to),
         status: 0
-      }
+      },
+      order: {created: 'ASC'}
     });
   }
 

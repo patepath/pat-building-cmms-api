@@ -5,7 +5,7 @@ import { Brand } from 'src/brand/entities/brand.entity';
 
 export class UpdateMachineDto extends PartialType(CreateMachineDto) {
     name: string;
-    model: string;
-    machineGroup: Machinegroup;
-    brand: Brand;
+    model?: string;
+    machineGroup?: Machinegroup;
+    brand?: Brand;
 }
