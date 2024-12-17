@@ -6,10 +6,10 @@ export class Equipment {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: ''})
     code: string;
 
-    @Column()
+    @Column({default: ''})
     name: string;
     
     @ManyToOne(() => Group, (group) => group.id, { eager: true })

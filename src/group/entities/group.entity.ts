@@ -6,7 +6,7 @@ export class Group {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: ''})
     code: string;
 
     @Column()

@@ -33,7 +33,7 @@ export class IssueService {
       }
 
       if(createIssueDto.type == 1) {
-        createIssueDto.code = code;
+        createIssueDto.code = `OP-${code}`;
       } else {
         createIssueDto.code = `PM-${code}`;
       }

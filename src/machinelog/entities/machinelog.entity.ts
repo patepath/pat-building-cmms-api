@@ -10,16 +10,16 @@ export class Machinelog {
     @JoinColumn()
     machine: Machine;
 
-    @Column()
+    @Column({default: ''})
     sn: string;
 
-    @Column()
+    @Column({default: ''})
     contactName: string;
     
-    @Column()
+    @Column({default: ''})
     contactPhone: string;
 
-    @Column()
+    @Column({default: ''})
     location: string;
 
     @Column('datetime')
