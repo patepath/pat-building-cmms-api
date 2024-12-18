@@ -58,7 +58,9 @@ export class IssueService {
 
     await this.issueRepos.query(sql).then(s => {
       if(s.length>0) {
-        last = Number(s[0].code.split('-')[1]);
+        let code = s[0].code.split('-')
+        last = Number(code[code.length-1]);
+
       } else {
         last = 0;
       }

@@ -1,6 +1,6 @@
 import { Brand } from "src/brand/entities/brand.entity";
 import { Machinegroup } from "src/machinegroup/entities/machinegroup.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne,  PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Machine {
@@ -19,6 +19,6 @@ export class Machine {
 
     @ManyToOne(()=> Brand, brand => brand.id, {eager: true, nullable: true})
     @JoinColumn()
-    brand: Brand;
+    brand!: Brand;
 }
 
